@@ -1,6 +1,6 @@
 // Load this at the end of the body element before your own code.
 
-var Bildschirm = window.Bildschirm = function() {
+var Bildschirm = function() {
   document.getElementsByTagName("html")[0].style.height = "100%";
 
   this.body = document.getElementsByTagName("body")[0];
@@ -10,9 +10,8 @@ var Bildschirm = window.Bildschirm = function() {
   this.body.style.height = "100%";
   this.body.style.overflow = "hidden";
   
-
   this.canvas = document.createElement("canvas");
-  this.canvas.style.backgroundColor = "#ddd";
+  // this.canvas.style.backgroundColor = "#ddd";
   this.canvas.width = this.body.offsetWidth;
   this.canvas.height = this.body.offsetHeight;
 
