@@ -6,28 +6,34 @@
 <script src="../src/jssum.js"></script>
 <script>
 
-var stift = new Stift();
-        
-stift.bewegeBis(50, 200);
-stift.runter();
-stift.bewegeUm(100);
-stift.dreheUm(135);
-stift.bewegeUm(141);
-stift.dreheUm(-135);
-stift.bewegeUm(100);
-stift.dreheUm(135);
-stift.bewegeUm(71);
-stift.dreheUm(90);
-stift.bewegeUm(71);
-stift.dreheUm(45);
-stift.bewegeUm(100);
-stift.dreheUm(135);
-stift.bewegeUm(141);
-stift.dreheUm(225);
-stift.bewegeUm(100);
-stift.hoch();
-stift.dreheBis(0);
-    
+HausDesNikolaus = function() {
+}
+
+HausDesNikolaus.prototype.bearbeiteMausKlick = function(x, y) {
+    var stift = new Stift();
+    stift.bewegeBis(x, y);
+    stift.runter();
+    stift.bewegeUm(100);
+    stift.dreheUm(135);
+    stift.bewegeUm(141);
+    stift.dreheUm(-135);
+    stift.bewegeUm(100);
+    stift.dreheUm(135);
+    stift.bewegeUm(71);
+    stift.dreheUm(90);
+    stift.bewegeUm(71);
+    stift.dreheUm(45);
+    stift.bewegeUm(100);
+    stift.dreheUm(135);
+    stift.bewegeUm(141);
+    stift.dreheUm(225);
+    stift.bewegeUm(100);
+    stift.hoch();
+    stift.dreheBis(0);
+};
+
+bildschirm.starteApplikation(new HausDesNikolaus());
+
 </script>
 </body>
 </html>

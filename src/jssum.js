@@ -1,32 +1,117 @@
 // Load this at the end of the body element before your own code.
 
 var Bildschirm = function() {
-  document.getElementsByTagName("html")[0].style.height = "100%";
+    document.getElementsByTagName("html")[0].style.height = "100%";
 
-  this.body = document.getElementsByTagName("body")[0];
-  this.body.style.border = 0;
-  this.body.style.padding = 0;
-  this.body.style.margin = 0;
-  this.body.style.height = "100%";
-  this.body.style.overflow = "hidden";
+    this.body = document.getElementsByTagName("body")[0];
+    this.body.style.border = 0;
+    this.body.style.padding = 0;
+    this.body.style.margin = 0;
+    this.body.style.height = "100%";
+    this.body.style.overflow = "hidden";
+    this.body.style.backgroundColor = "black";
+    this.scale = 1;
   
-  this.canvas = document.createElement("canvas");
-  // this.canvas.style.backgroundColor = "#ddd";
-  this.canvas.width = this.body.offsetWidth;
-  this.canvas.height = this.body.offsetHeight;
+    this.container = document.getElementById("jssum-container");
+    if (this.container == null) {
+        this.container = document.createElement("div");
+        this.container.setAttribute("id", "jssum-container");
+        this.container.style.position = "absolute";
+        this.container.style.overflow = "hidden";
+        this.body.appendChild(this.container);
+        
+        this.canvas = document.createElement("canvas");
+        this.canvas.setAttribute("id", "jssum-bildschirm");
+        this.container.appendChild(this.canvas);
+        this.canvas.style.backgroundColor = "white";
+    } else {
+        this.canvas = document.getElementById("jssum-canvas");
+    }
+    
+    this.app = null;
+    this.fixedWidth = 0;
+    this.fixedHeight = 0;
+    this.justiereGroesse();
+  
+    this.canvas.onclick = function(event) {
+        window.console.log("click", bildschirm);
+        if (bildschirm.app != null && 
+            bildschirm.app.bearbeiteMausKlick != null) {
+            window.console.log("clack");
+            if (!event) {
+                event = window.event;
+            }
+            var x = event.pageX - window.bildschirm.canvas.offsetLeft; 
+            var y = event.pageY - window.bildschirm.canvas.offsetTop;
+            bildschirm.app.bearbeiteMausKlick(x, y);
+        }  
+    }
+    
+    window.onresize = function() {
+        bildschirm.justiereGroesse();
+    };
 
-  this.body.appendChild(this.canvas);
 };
 
+Bildschirm.prototype.justiereGroesse = function() {
+    var targetWidth = this.fixedWidth <= 0 ? this.body.offsetWidth : this.fixedWidth;
+    var targetHeight = this.fixedHeight <= 0 ? this.body.offsetHeight : this.fixedHeight;
+    
+    if (targetHeight != this.canvas.height || 
+        targetWidth != this.canvas.width) {
+        this.canvas.width = targetWidth;
+        this.canvas.height = targetHeight;
+    }
+    
+    var scaleX = this.body.offsetWidth / targetWidth;
+    var scaleY = this.body.offsetHeight / targetHeight;
+    
+    this.scale = Math.min(scaleX, scaleY);
+    
+    var scaledWidth = targetWidth * this.scale;
+    var scaledHeight = targetHeight * this.scale;
+    
+    this.canvas.style.width = this.container.style.width = scaledWidth + "px";
+    this.canvas.style.height = this.container.style.height = scaledHeight + "px";
+    this.container.style.left = (this.body.offsetWidth - scaledWidth) / 2;
+    this.container.style.top = (this.body.offsetHeight - scaledHeight) / 2;
+}
+
 Bildschirm.prototype.hoehe = function() {
-  return this.canvas.offsetHeight;
+    return this.canvas.height;
 };
 
 Bildschirm.prototype.breite = function() {
-  return this.canvas.offsetWidth;
+    return this.canvas.width;
 };
 
+Bildschirm.prototype.setzeGroesse = function(w, h) {
+    this.fixedWidth = w;
+    this.fixedHeight = h;
+    this.justiereGroesse();
+};
+
+Bildschirm.prototype.setzeHintergrundbild = function(url) {
+    this.canvas.style.background = "url(" + url + ") center center no-repeat";
+    this.canvas.style.backgroundSize = "cover";
+} 
+
+
+Bildschirm.prototype.starteApplikation = function(app) {
+    this.app = app;
+    this.justiereGroesse();
+    this.canvas.getContext("2d").clearRect(0, 0, this.canvas.width, this.canvas.height);
+    
+    window.setInterval(function() {
+        if (app.bearbeiteUpdate) {
+            app.bearbeiteUpdate();
+        }
+    }, 33);
+};
+
+
 window.bildschirm = new Bildschirm();
+
 
 var Stift = window.Stift = function() {
   this.context = window.bildschirm.canvas.getContext("2d");
@@ -82,5 +167,7 @@ Stift.prototype.runter = function() {
 Stift.prototype.winkel = function() {
   return this.winkel;
 };
+
+
 
 
