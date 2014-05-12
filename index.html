@@ -1,24 +1,50 @@
 <html>
 <head>
-<title>JsSum</title>
+<title>JS SuM</title>
 <link rel="stylesheet" href="simple.css">
 </head>
 <body>
-<h1>JsSum</h1>
-<p>Eine partielle JavaScript-Portierung der SuM-Biblothek und eine darauf
-aufbauende Erweiterung f&uuml; für Figuren und T&ouml;ne.</p>
 
-<h2>Beispiele:</h2>
+<h1>JS SuM</h1>
+<p>
+Eine partielle JavaScript-Portierung der "Stifte und M&auml;se"-Biblothek 
+(SuM) und eine darauf aufbauende Erweiterung f&uuml; für "Figuren und Noten"
+(FuN).
+
+<h2>Beispiele</h2>
 <ul>
-  <li><a href="beispiel/haus-des-nikolaus.html">Haus des Nikolaus</a> (<a href="http://tidejnet.appspot.com/#id=1g8uucx7t7x1f">TideJ</a>)</li>
-  <li><a href="beispiel/jumpy-pony.html">Jumpy Pony</a> (<a href="http://tidejnet.appspot.com/#id=4s286ybikhp6">TideJ</a>)</li>
+    <li><a href="beispiel/haus-des-nikolaus.html">Haus des Nikolaus</a>
+        (<a href="http://tidejnet.appspot.com/#id=1g8uucx7t7x1f">TideJ</a>)</li>
+
+    <li><a href="beispiel/jumpy-pony.html">Jumpy Pony</a>
+        (<a href="http://tidejnet.appspot.com/#id=4s286ybikhp6">TideJ</a>)</li>
 </ul>
 
-<h2>Bibliothek-Quellcode:</h2>
+<h2>Bibliothek-Quellcode</h2>
 <ul>
-    <li><a href="https://github.com/stefanhaustein/jssum/blob/master/src/jssum.js">jssum.js</a></li>
-    <li><a href="https://github.com/stefanhaustein/jssum/blob/master/src/jsfut.js">jsfut.js</a></li>
+    <li><a href="http://tidej.net/jssum/src/jssum.js">jssum.js</a></li>
+    <li><a href="http://tidej.net/jssum/src/jsfun.js">jsfun.js</a></li>
+    <li><a href="https://github.com/stefanhaustein/jssum">JsSum Github-Projekt</a></li>
 </ul>
 
+<h2>Unterschiede zu SuM in Java</h2>
+<ul>
+    <li>Zur Zeit sind nur <tt>Bildschirm</tt> und <tt>Stift</tt> 
+        implementiert.</li>
+        
+    <li>Aktives Warten auf Ereignisse ist im Browser nicht
+        (ohne erhebliche Aufand*) machbar, daher müssen Eingaben mittels
+        Ereignisbehandlung verarbeitet werden. Das ist auch der Hauptgrund für
+        das Fehlen von <tt>Maus</tt> und <tt>Tastatur</tt>.</li>
+        
+    <li>Der <tt>Bildschirm</tt> ist via der Variable <tt>bildschirm</tt>
+        global verfügbar (analog zu <tt>window</tt> im Browser) und
+        sollte nicht im Program instanziert werden.</li> 
+    </li>
+</ul>
+
+<hr>
+*) Hauptprogram im Worker-Thread und Kommunikation mit einem lokalen 
+"Zeichenserver".
 </body>
 </html>

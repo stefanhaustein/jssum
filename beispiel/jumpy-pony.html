@@ -6,7 +6,7 @@
 
 <body>
 <script src="../src/jssum.js"></script>
-<script src="../src/jsfut.js"></script>
+<script src="../src/jsfun.js"></script>
 <script>
 var JumpyPony = function() {
     bildschirm.setzeGroesse(100, 100);
@@ -14,8 +14,13 @@ var JumpyPony = function() {
         "http://www.profilethai.com/wallpaper/original/profilethai_landscape_desktop_by_furiouscheese.png");
     this.hindernis = new Figur(JumpyPony.HINDERNIS_URL, 12, 12);
     this.pony = new Figur(JumpyPony.PONY_URL, 16, 14);
-    this.hindernis.bewegeZu(100, 0);
+    this.pony.bewegeBis(10, 90);
+    this.hindernis.bewegeBis(100, 90);
 };
+
+JumpyPony.VOGEL_URL = "http://www.umzugs.com/gif/bird.gif";
+
+JumpyPony.POW_URL = "http://24.media.tumblr.com/ae84089c0aff8e36a02a4073ae756528/tumblr_mz9s9xFRkW1s6294bo1_400.gif";
 
 JumpyPony.PONY_URL = 
     "http://3.bp.blogspot.com/-n6MOjgQ-AVA/UsF8eEu-zMI/AAAAAAAAAGY/EdBRCR_rghw/s1600/FANMADE_Flying_derpy_vector.gif";
@@ -23,12 +28,21 @@ JumpyPony.PONY_URL =
 JumpyPony.HINDERNIS_URL = 
     "http://www.punktzupunkt.com/data/images/Hindernis-f%C3%BCr-den-Springreiter-Wettbewerb_50f6ed1da0c69-thumb.jpg";
 
-JumpyPony.prototype.bearbeiteUpdate = function() {
-    this.hindernis.setzeX(this.hindernis.x() - 1);
-    if (this.hindernis.x() < -10) {
-        this.hindernis.setzeX(100);
+JumpyPony.prototype.bearbeiteLeerlauf = function() {
+    this.hindernis.bewegeUm(-1);
+    if (this.hindernis.hPosition() < -10) {
+        this.hindernis.bewegeUm(110);
     }
 };
+
+JumpyPony.prototype.bearbeiteMausDruck = function(x, y) {
+    window.console.log("maus druck", x, y);
+};
+
+JumpyPony.prototype.bearbeiteMausBewegt = function(x, y) {
+    window.console.log("maus bewegt", x, y);
+};
+
 
 bildschirm.starteApplikation(new JumpyPony());
 </script>
